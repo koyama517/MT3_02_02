@@ -21,9 +21,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Sphere sphere1 = { 0.0f,0.0f, 0.0f, 1.0f };
 
-	Plane plane = { 1.0f,1.0f,1.0f,1.0f };
-	//Sphere sphere2 = { 0.5f,0.0f, 0.5f, 0.5f };
-
+	Plane plane = { 1.0f,1.0f,1.0f,{0.0f} };
+	
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
@@ -67,7 +66,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::DragFloat("Sphere1Radius", &sphere1.radius, 0.01f);
 		ImGui::End();
 
-		DrawPlane(plane,worldMViewProjectionMatrix,viewportMatrix,BLACK);
+		DrawPlane(plane, worldMViewProjectionMatrix, viewportMatrix, BLACK);
 
 		///
 		/// ↑描画処理ここまで
