@@ -19,7 +19,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector3 cameraTranslate = { 0.0f,1.9f,-6.49f };
 	Vector3 cameraRotate = { 0.26f,0.0f,0.0f };
 
-	Sphere sphere1 = { 0.0f,0.0f, 0.0f, 1.0f };
+	Segment line = { {0,0,0},{1,1,0} };
 
 	Plane plane = { 1.0f,1.0f,1.0f,{1.0f} };
 	
@@ -51,19 +51,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(worldMViewProjectionMatrix, viewportMatrix);
-		if (IsCollision(sphere1, plane))
+		if (IsCollision(line, plane))
 		{
-			DrawShere(sphere1, worldMViewProjectionMatrix, viewportMatrix, RED);
+			//DrawShere(line, worldMViewProjectionMatrix, viewportMatrix, RED);
+			DrawLine(line, worldMViewProjectionMatrix, viewportMatrix, RED);
 		}
 		else
 		{
-			DrawShere(sphere1, worldMViewProjectionMatrix, viewportMatrix, BLACK);
+			//DrawShere(line, worldMViewProjectionMatrix, viewportMatrix, BLACK);
+			DrawLine(line, worldMViewProjectionMatrix, viewportMatrix, BLACK);
 		}
 		ImGui::Begin("Window");
 		ImGui::DragFloat3("CameraTranslate", &cameraTranslate.x, 0.01f);
 		ImGui::DragFloat3("CameraRotate", &cameraRotate.x, 0.01f);
-		ImGui::DragFloat3("Sphere1Center", &sphere1.center.x, 0.01f);
-		ImGui::DragFloat("Sphere1Radius", &sphere1.radius, 0.01f);
+		ImGui::DragFloat3("Sphere1Center", &line.origin.x, 0.01f);
+		//ImGui::DragFloat("Sphere1Radius", &line.diff, 0.01f);
 		ImGui::End();
 
 		DrawPlane(plane, worldMViewProjectionMatrix, viewportMatrix, BLACK);

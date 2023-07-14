@@ -8,15 +8,6 @@ void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMa
 	Vector3 localBorderVer[2]{};
 	Vector3 localStripeVer[2]{};
 
-	/*for (uint32_t x = 0; x <= kSubdivision; x++) {
-		localBorderVer[x][0] = { -kGridHalfWidth, 0.0f, kGridEvery * (float(x) - 5) };
-		localBorderVer[x][1] = { kGridHalfWidth, 0.0f, kGridEvery * (float(x) - 5) };
-
-		localStripeVer[x][0] = { kGridEvery * (float(x) - 5) , 0.0f, -kGridHalfWidth };
-		localStripeVer[x][1] = { kGridEvery * (float(x) - 5) , 0.0f, kGridHalfWidth };
-
-	}*/
-
 	Vector3 screenBorderVer[2]{};
 	Vector3 screenStripeVer[2]{};
 
@@ -36,9 +27,6 @@ void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMa
 
 		Vector3 ndcStripeStart = TransformCoord(localStripeVer[0], viewProjectionMatrix);
 		Vector3 ndcStripeEnd = TransformCoord(localStripeVer[1], viewProjectionMatrix);
-
-
-
 
 		screenBorderVer[0] = TransformCoord(ndcBorderStart, viewportMatrix);
 		screenBorderVer[1] = TransformCoord(ndcBorderEnd, viewportMatrix);
@@ -133,3 +121,23 @@ void DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const 
 	Novice::DrawLine(int(points[2].x), int(points[2].y), int(points[0].x), int(points[0].y), color);
 
 };
+
+void DrawLine(const Segment& segment, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color) {
+
+	Vector3 localLine[2];
+	Vector3 screenLine[2];
+
+	localLine[0] = segment.origin;
+	localLine[1] = Add(segment.origin, segment.diff);
+
+	Vector3 ndcBorderStart = TransformCoord(localLine[0], viewProjectionMatrix);
+	Vector3 ndcBorderEnd = TransformCoord(localLine[1], viewProjectionMatrix);
+
+	screenLine[0] = TransformCoord(ndcBorderStart, viewportMatrix);
+	screenLine[1] = TransformCoord(ndcBorderEnd, viewportMatrix);
+
+	Novice::DrawLine(
+		int(screenLine[0].x), int(screenLine[0].y),
+		int(screenLine[1].x), int(screenLine[1].y),
+		color);
+}
